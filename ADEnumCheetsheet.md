@@ -4,7 +4,7 @@
 | `Get-DomainPolicy` | View the domain password policy |
 | `.\SharpView.exe ConvertTo-SID -Name sally.jones`            | Convert a username to a SID |
 | `.\SharpView.exe Convert-ADName -ObjectName S-1-5-21-2974783224-3764228556-2640795941-1724` | Convert a SID to a username |
-| `Get-DomainUser -Identity harry.jones -Domain inlanefreight.local | Select-Object -Property name,samaccountname,description,memberof,whencreated,pwdlastset,lastlogontimestamp,accountexpires,admincount,userprincipalname,serviceprincipalname,mail,useraccountcontrol`| Enum important user info
+| `Get-DomainUser -Identity harry.jones -Domain inlanefreight.local \| Select-Object -Property name,samaccountname,description,memberof,whencreated,pwdlastset,lastlogontimestamp,accountexpires,admincount,userprincipalname,serviceprincipalname,mail,useraccountcontrol`| Enum important user info
 | `Get-DomainUser * -Domain inlanefreight.local \| Select-Object -Property name,samaccountname,description,memberof,whencreated,pwdlastset,lastlogontimestamp,accountexpires,admincount,userprincipalname,serviceprincipalname,mail,useraccountcontrol \| Export-Csv .\inlanefreight_users.csv -NoTypeInformation`| Enum important shtuff for ALL domain users and export to csv file for later perusings
 | `Get-DomainUser harry.jones  \| ConvertFrom-UACValue -showall` | List all UAC values |
 | `.\SharpView.exe Get-Domain` | View information about the current domain |
