@@ -4,10 +4,15 @@
 | `Get-DomainPolicy` | View the domain password policy |
 | `.\SharpView.exe ConvertTo-SID -Name sally.jones`            | Convert a username to a SID |
 | `.\SharpView.exe Convert-ADName -ObjectName S-1-5-21-2974783224-3764228556-2640795941-1724` | Convert a SID to a username |
+| `Get-DomainUser -Identity harry.jones -Domain inlanefreight.local | Select-Object -Property name,samaccountname,description,memberof,whencreated,pwdlastset,lastlogontimestamp,accountexpires,admincount,userprincipalname,serviceprincipalname,mail,useraccountcontrol`| Enum important user info
+| `Get-DomainUser * -Domain inlanefreight.local \| Select-Object -Property name,samaccountname,description,memberof,whencreated,pwdlastset,lastlogontimestamp,accountexpires,admincount,userprincipalname,serviceprincipalname,mail,useraccountcontrol \| Export-Csv .\inlanefreight_users.csv -NoTypeInformation`| Enum important shtuff for ALL domain users and export to csv file for later perusings
 | `Get-DomainUser harry.jones  \| ConvertFrom-UACValue -showall` | List all UAC values |
 | `.\SharpView.exe Get-Domain` | View information about the current domain |
 | `.\SharpView.exe Get-DomainOU` | List all OUs |
-| `.\SharpView.exe Get-DomainUser -KerberosPreauthNotRequired` | Find ASREPRoastable users |
+| `.\SharpView.exe Get-DomainUser -KerberosPreauthNotRequired -Properties samaccountname,useraccountcontrol,memberof` | Find ASREPRoastable users |
+| `.\SharpView.exe Get-DomainUser -TrustedToAuth -Properties samaccountname,useraccount,memberof`| Find Kerberoastable constrained delegation users
+| `.\SharpView.exe Get-DomainUser -LDAPFilter "(userAccountControl:1.2.840.113556.1.4.803:=524288)"`| Find Unconstrained delegation users
+| `Get-DomainUser -Properties samaccountname,description \| Where {$_.description -ne $null}` | Find users who put juicy stuff in dumb places
 | `Get-DomainComputer ` | Get a listing of domain computers |
 | `.\SharpView.exe Get-DomainGPO  \| findstr displayname` | List all GPO names |
 | ` Get-DomainGPO -ComputerIdentity WS01` | List GPOs on a specific host |
@@ -17,8 +22,9 @@
 | `Get-DomainTrust` | View a list of domain trusts |
 | `(Get-DomainUser).count` | Count all domain users |
 | `.\SharpView.exe Get-DomainUser -Help` | Get help about a SharpView function |
-| `Get-DomainUser -Properties samaccountname,description \| Where {$_.description -ne $null}` | Find non-blank user description fields |
-| `.\SharpView.exe Get-DomainUser -SPN` | Find users with SPNs set |
+| `.\SharpView.exe Get-DomainUser -SPN -Properties samaccountname,memberof,serviceprincipalname` | Find users with SPNs set for Kerberoasting |
+| `Get-DomainUser -Properties samaccountname,pwdlastset,lastlogon -Domain domainname.local \| select samaccountname, pwdlastset, lastlogon \| Sort-Object -Property pwdlastset`| Display all password set times
+| `Get-DomainUser -Properties samaccountname,pwdlastset,lastlogon -Domain domainname.local \| select samaccountname, pwdlastset, lastlogon \| where { $_.pwdlastset -lt (Get-Date).addDays(-90) }`| Get all passwords set before a certain data
 | `Find-ForeignGroup` | Find foreign domain users |
 | `Get-DomainGroup -Properties Name` | List domain groups |
 | `.\SharpView.exe Get-DomainGroupMember -Identity 'Help Desk'` | Get members of a domain group |
