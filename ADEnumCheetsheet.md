@@ -35,6 +35,7 @@
 | `.\SharpView.exe Get-DomainComputer -Unconstrained` | Find computers that allow unconstrained delegation |
 | `Get-DomainComputer -TrustedToAuth` | Find computers set with constrained delegation |
 | `Get-DomainObjectAcl -Identity harry.jones` | Enumerate ACLs on a user |
+| `$joeacl = Get-ObjectAcl -SamAccountName joe.evans -ResolveGUids \| ? {$_.ActiveDirectoryRights -eq "GenericAll"} \|Select-Object -ExpandProperty SecurityIdentifier \| Select -ExpandProperty value`| Get users that have GenericAll rights over the joe.evans user, then run Convert-SidToName on $joeacl|
 | `Find-InterestingDomainAcl` | Find objects in the domain with modification rights over non built-in objects| 
 | `Get-PathAcl "\\SQL01\DB_backups"` | Find the ACLs set on a directory |
 | ` gpresult /r /S WS01` | Get a report of all GPOs applied to a host |
